@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
-// import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/auth-utils";
+import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/auth-utils";
 import { parse } from "cookie";
-// import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import z from "zod";
 
 const loginValidationZodSchema = z.object({
@@ -21,7 +21,7 @@ const loginValidationZodSchema = z.object({
 
 export const loginUser = async (_currentState: any, formData: any): Promise<any> => {
     try {
-        // const redirectTo = formData.get('redirect') || null;
+        const redirectTo = formData.get('redirect') || null;
         let accessTokenObject: null | any = null;
         let refreshTokenObject: null | any = null;
         const loginData = {
@@ -93,24 +93,24 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             path: refreshTokenObject.Path || "/",
             sameSite: refreshTokenObject['SameSite'] || "none",
         });
-        // const verifiedToken: JwtPayload | string = jwt.verify(accessTokenObject.accessToken, process.env.JWT_SECRET as string);
+        const verifiedToken: JwtPayload | string = jwt.verify(accessTokenObject.accessToken, process.env.JWT_SECRET as string);
 
-        // if (typeof verifiedToken === "string") {
-        //     throw new Error("Invalid token");
+        if (typeof verifiedToken === "string") {
+            throw new Error("Invalid token");
 
-        // }
+        }
 
-        // const userRole: UserRole = verifiedToken.role;
+        const userRole: UserRole = verifiedToken.role;
 
 
-        // if (redirectTo) {
-        //     const requestedPath = redirectTo.toString();
-        //     if (isValidRedirectForRole(requestedPath, userRole)) {
-        //         redirect(requestedPath);
-        //     } else {
-        //         redirect(getDefaultDashboardRoute(userRole));
-        //     }
-        // }
+        if (redirectTo) {
+            const requestedPath = redirectTo.toString();
+            if (isValidRedirectForRole(requestedPath, userRole)) {
+                redirect(requestedPath);
+            } else {
+                redirect(getDefaultDashboardRoute(userRole));
+            }
+        }
 
     } catch (error: any) {
         // Re-throw NEXT_REDIRECT errors so Next.js can handle them
