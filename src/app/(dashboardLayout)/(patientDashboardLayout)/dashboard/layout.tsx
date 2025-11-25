@@ -1,3 +1,4 @@
+import LogoutButton from "@/components/shared/LogoutButton";
 import React from "react";
 
 const PatientDashboardLayout = ({
@@ -5,7 +6,10 @@ const PatientDashboardLayout = ({
 }: {
   children: React.ReactNode;
 }) => {
-  return <div>{children}</div>;
+  return <div>
+    <LogoutButton/>
+    {children}
+    </div>;
 };
 
 export default PatientDashboardLayout;
