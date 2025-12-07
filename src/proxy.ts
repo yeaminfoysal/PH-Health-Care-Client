@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute, UserRole } from './lib/auth-utils';
 
 
-
+console.log(process.env.JWT_SECRET)
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
     const cookieStore = await cookies()
