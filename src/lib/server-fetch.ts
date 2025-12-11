@@ -1,3 +1,4 @@
+import { getCookie } from "@/services/auth/tokenHandlers";
 
 
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3001/api/v1";
@@ -8,14 +9,14 @@ const serverFetchHelper = async (endpoint: string, options: RequestInit): Promis
 
     console.log({ body: options.body });
 
-    // const accessToken = await getCookie("accessToken");
+    const accessToken = await getCookie("accessToken");
 
     const response = await fetch(`${BACKEND_API_URL}${endpoint}`, {
         headers: {
             ...headers,
             // ...(accessToken ? { "Authorization": `Bearer ${accessToken}` } : {}),
             // ...(accessToken ? { "Authorization": accessToken } : {}),
-            // Cookie: accessToken ? `accessToken=${accessToken}` : "",
+            Cookie: accessToken ? `accessToken=${accessToken}` : "",
         },
         ...restOptions,
     })
@@ -41,3 +42,5 @@ export const serverFetch = {
  * serverFetch.get("/auth/me")
  * serverFetch.post("/auth/login", { body: JSON.stringify({}) })
  */
+
+// ENOENT: no such file or directory, open 'D:\PH-Health-Care-Server\uploads\file-1765436636698-557575286'
