@@ -7,8 +7,8 @@ import { ISpecialty } from "@/types/specialities.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import DoctorViewDetailDialog from "./DoctorViewDetailDialog";
 import { doctorsColumns } from "./doctorsColumns";
+import DoctorViewDetailDialog from "./DoctorViewDetailDialog";
 import DoctorFormDialog from "./doctorFormDialog";
 
 interface DoctorsTableProps {
